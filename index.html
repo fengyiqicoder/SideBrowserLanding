@@ -229,14 +229,17 @@
         alert('Please enter a valid email address.');
         return;
       }
-
       fetch(`https://api.000ooo.ooo/subscribe?email=${encodeURIComponent(email)}&project=sidebrowser`)
         .then(response => response.json())
         .then(data => {
           if (data.success === true) {
             alert('You have been subscribed. We will notify you when SideBrowser launches.');
-          } else if (data.error === "Email already subscribed") {
+          } else if (data.error === "Email already subscribed for this project") {
             alert('This email is already subscribed. We will notify you when SideBrowser launches.');
+          } else if (data.error === "Email is required") {
+            alert('Please enter a valid email address.');
+          } else if (data.error === "Project is required") {
+            alert('An error occurred. Please try again later.');
           } else {
             alert('Subscription failed. Please try again later.');
           }
